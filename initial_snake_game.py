@@ -13,6 +13,8 @@ def main():
     point = 0
     obstacles = []
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    text1 = canvas.create_text(CANVAS_WIDTH/2-70, CANVAS_HEIGHT/2-20, text='Welcome to', font_size = 25, font = 'Ubuntu')
+    text2 = canvas.create_text(CANVAS_WIDTH/2-105, CANVAS_HEIGHT/2+20, text='Baby Snake Game!', font_size = 25, font = 'Ubuntu')
     # draw a player
     snake_x = 0
     snake_y = 0
@@ -26,6 +28,8 @@ def main():
     while True:
         key1 = canvas.get_last_key_press()
         if key1 == 'ArrowRight' or key1 == 'ArrowLeft' or key1 == 'ArrowUp' or key1 == 'ArrowDown':
+            canvas.delete(text1)
+            canvas.delete(text2)
             break
 
     while True:
@@ -64,8 +68,8 @@ def main():
                 key1 = key2
             
         if snake_x < 0 or snake_x > 400 or snake_y < 0 or snake_y > 400:
-            print('Game Over!')
-            print('Your score is', str(point))
+            text1 = canvas.create_text(CANVAS_WIDTH/2-70, CANVAS_HEIGHT/2-20, text='Game Over!', font_size = 25, font = 'Ubuntu')
+            text2 = canvas.create_text(CANVAS_WIDTH/2-80, CANVAS_HEIGHT/2+20, text='Your score is '+str(point), font_size = 25, font = 'Ubuntu')
             break
         
         goal_top_y = canvas.get_top_y(goal)
@@ -81,15 +85,13 @@ def main():
             y = random.randint(0, 19)
             canvas.create_rectangle(20*x, 20*y, 20*x+SIZE, 20*y+SIZE, 'gray')
             obstacles = canvas.find_overlapping(0, 0, 400, 400)
-            print(obstacles)
-    
         
         # check touch the obstacle
         for object in obstacles:
-            if (object != 'shape_0') & (object != 'shape_1'):
+            if (object != 'shape_2') & (object != 'shape_3'):
                 if (snake_x == canvas.get_left_x(object)) & (snake_y == canvas.get_top_y(object)):
-                    print('Game Over!')
-                    print('Your score is', str(point))
+                    text1 = canvas.create_text(CANVAS_WIDTH/2-70, CANVAS_HEIGHT/2-20, text='Game Over!', font_size = 25, font = 'Ubuntu')
+                    text2 = canvas.create_text(CANVAS_WIDTH/2-80, CANVAS_HEIGHT/2+20, text='Your score is '+str(point), font_size = 25, font = 'Ubuntu')
                     return
     
 if __name__ == '__main__':
